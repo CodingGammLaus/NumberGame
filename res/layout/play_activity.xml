@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/test"
+    tools:context=".PlayActivity">
+
+    <TextView
+        android:id="@+id/main_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GAME MODES"
+        android:textStyle="bold"
+        android:textSize="60sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="50dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/list_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/list_button"
+        android:layout_width="250dp"
+        android:layout_height="90dp"
+        android:text="LIST"
+        android:textStyle="bold"
+        android:textSize="50sp"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        android:layout_marginTop="100dp"
+        app:layout_constraintBottom_toTopOf="@id/higher_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_text"/>
+
+    <Button
+        android:id="@+id/higher_button"
+        android:layout_width="250dp"
+        android:layout_height="90dp"
+        android:text="HIGH/LOW"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/guess_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/list_button"/>
+
+    <Button
+        android:id="@+id/guess_button"
+        android:layout_width="250dp"
+        android:layout_height="90dp"
+        android:text="GUESS"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/more_to_come_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/higher_button"/>
+
+    <TextView
+        android:id="@+id/more_to_come_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="More to come..."
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guess_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

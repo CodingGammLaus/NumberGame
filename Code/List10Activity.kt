@@ -1,0 +1,812 @@
+package se.umu.cs.dv21sln.numbergame
+
+import android.app.AlertDialog
+import android.content.Intent
+import android.os.Bundle
+import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
+import se.umu.cs.dv21sln.numbergame.databinding.List10ActivityBinding
+
+class List10Activity : AppCompatActivity() {
+
+    private lateinit var binding: List10ActivityBinding
+    private var number = 0
+    private var numberArray = arrayListOf<Int>(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+    private var used = 1
+    private var points = 0
+    private var interval = 1000
+
+    private var won = 0
+    private var sixnine = 0
+    private var sixsixsix = 0
+    private var fourtwenty = 0
+    private var restart = false
+
+    private lateinit var adapterItem: ArrayAdapter<String>
+    private val menuItemList = arrayListOf<String>("List 5", "List 15")
+
+    private var btnUsed = arrayListOf<Boolean>(false, false, false, false, false, false, false, false, false, false)
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        /*Get the view binding*/
+        binding = List10ActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        loadInStats()
+        slumpButtonInit()
+
+        button1Init()
+        button2Init()
+        button3Init()
+        button4Init()
+        button5Init()
+        button6Init()
+        button7Init()
+        button8Init()
+        button9Init()
+        button10Init()
+
+        setUpMenu()
+        quitButtonInit()
+    }
+
+    /**
+     *
+     */
+    private fun loadInStats() {
+
+        val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
+
+        interval = sharedPref.getInt("listInterval", 1000)
+        won = sharedPref.getInt("winsList", 0)
+        sixnine = sharedPref.getInt("69", 0)
+        sixsixsix = sharedPref.getInt("666", 0)
+        fourtwenty = sharedPref.getInt("420", 0)
+    }
+
+    /**
+     *
+     */
+    private fun setUpMenu() {
+
+        adapterItem = ArrayAdapter(this, R.layout.menu_item, menuItemList)
+        binding.dropDownMenu.setAdapter(adapterItem)
+
+        binding.dropDownMenu.setOnItemClickListener { _, _, pos, _ ->
+
+            if(pos == 0) {
+
+                val intent = Intent(this, List5Activity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+            else if (pos == 1) {
+
+                val intent = Intent(this, List15Activity::class.java)
+                startActivity(intent)
+                finish()
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    private fun slumpAnimation() {
+
+        binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
+    }
+
+    /**
+     * Slump button init.
+     */
+    private fun slumpButtonInit() {
+
+        /*First click*/
+        binding.slumpButton.setOnClickListener() {
+
+            start()
+
+            number = (1..interval).random()
+            binding.numberText.text = "Number: " + number.toString()
+            slumpAnimation()
+            binding.slumpButton.isEnabled = false
+
+            checkStats()
+
+            binding.slumpButton.setOnClickListener() {
+
+                if(binding.slumpButton.isEnabled) {
+                    number = (1..interval).random()
+                    binding.numberText.text = "Number: " + number.toString()
+                    slumpAnimation()
+                    binding.slumpButton.isEnabled = false
+                    used++
+
+                    checkStats()
+                }
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    private fun start() {
+
+        binding.slumpButton.text = "SLUMP"
+        binding.button1.isEnabled = true
+        binding.button2.isEnabled = true
+        binding.button3.isEnabled = true
+        binding.button4.isEnabled = true
+        binding.button5.isEnabled = true
+        binding.button6.isEnabled = true
+        binding.button7.isEnabled = true
+        binding.button8.isEnabled = true
+        binding.button9.isEnabled = true
+        binding.button10.isEnabled = true
+    }
+
+    /**
+     * Button 1 init.
+     */
+    private fun button1Init() {
+
+        binding.button1.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button1.isEnabled = false
+                binding.button1.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 1..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button1.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(0)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[0] = number
+                binding.button1.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[0] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button2Init() {
+
+        binding.button2.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button2.isEnabled = false
+                binding.button2.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                if(number < numberArray[0] && btnUsed[0]) {
+
+                    binding.button2.background = resources.getDrawable(R.drawable.wrong_button)
+
+                    checkIfDone()
+                    checkIfRestart(1)
+                }
+
+                for(i in 2..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button2.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(1)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[1] = number
+                binding.button2.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[1] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button3Init() {
+
+        binding.button3.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button3.isEnabled = false
+                binding.button3.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..1) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button3.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(2)
+                        return@setOnClickListener
+                    }
+                }
+
+                for(i in 3..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button3.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(2)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[2] = number
+                binding.button3.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[2] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button4Init() {
+
+        binding.button4.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button4.isEnabled = false
+                binding.button4.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..2) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button4.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(3)
+                        return@setOnClickListener
+                    }
+                }
+
+                for(i in 4..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button4.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(3)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[3] = number
+                binding.button4.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[3] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button5Init() {
+
+        binding.button5.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button5.isEnabled = false
+                binding.button5.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..3) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button5.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(4)
+                        return@setOnClickListener
+                    }
+                }
+
+                for(i in 5..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button5.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(4)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[4] = number
+                binding.button5.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[4] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button6Init() {
+
+        binding.button6.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button6.isEnabled = false
+                binding.button6.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..4) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button6.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(5)
+                        return@setOnClickListener
+                    }
+                }
+
+                for(i in 6..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button6.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(5)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[5] = number
+                binding.button6.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[5] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button7Init() {
+
+        binding.button7.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button7.isEnabled = false
+                binding.button7.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..5) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button7.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(6)
+                        return@setOnClickListener
+                    }
+                }
+
+                for(i in 7..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button7.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(6)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[6] = number
+                binding.button7.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[6] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button8Init() {
+
+        binding.button8.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button8.isEnabled = false
+                binding.button8.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..6) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button8.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(7)
+                        return@setOnClickListener
+                    }
+                }
+
+                for(i in 8..9) {
+
+                    if(number > numberArray[i] && btnUsed[i]) {
+
+                        binding.button8.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(7)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[7] = number
+                binding.button8.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[7] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button9Init() {
+
+        binding.button9.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button9.isEnabled = false
+                binding.button9.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..7) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button9.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(8)
+                        return@setOnClickListener
+                    }
+                }
+
+                if(number > numberArray[8] && btnUsed[8]) {
+
+                    binding.button9.background = resources.getDrawable(R.drawable.wrong_button)
+
+                    checkIfDone()
+                    checkIfRestart(8)
+                }
+
+                numberArray[8] = number
+                binding.button9.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[8] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun button10Init() {
+
+        binding.button10.setOnClickListener() {
+
+            if(!binding.slumpButton.isEnabled) {
+
+                binding.button10.isEnabled = false
+                binding.button10.text = number.toString()
+                binding.slumpButton.isEnabled = true
+
+                for(i in 0..8) {
+
+                    if(number < numberArray[i] && btnUsed[i]) {
+
+                        binding.button10.background = resources.getDrawable(R.drawable.wrong_button)
+
+                        checkIfDone()
+                        checkIfRestart(9)
+                        return@setOnClickListener
+                    }
+                }
+
+                numberArray[9] = number
+                binding.button10.background = resources.getDrawable(R.drawable.correct_button)
+                points++
+                btnUsed[9] = true
+            }
+
+            checkIfDone()
+        }
+    }
+
+    /**
+     * Check stats.
+     */
+    private fun checkStats() {
+
+        if(number == 666) {
+            sixsixsix++
+        }
+
+        else if(number == 69) {
+            sixnine++
+        }
+
+        else if(number == 420) {
+            fourtwenty++
+        }
+    }
+
+    /**
+     *
+     */
+    private fun checkIfDone() {
+
+        if(used == 10) {
+
+            result()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun checkIfRestart(i: Int) {
+
+        if(!btnUsed[i] && !restart) {
+
+            popupRestart()
+            restart = true
+        }
+    }
+
+    /**
+     *
+     */
+    private fun checkIfWon() {
+
+        if(points == 10) {
+
+            won++
+            binding.numberText.text = "WON!"
+            popupWin()
+        }
+
+        else {
+
+            binding.numberText.text = "Lose"
+            popupLose()
+        }
+    }
+
+    /**
+     * Result.
+     */
+    private fun result() {
+
+        binding.slumpButton.text = "RESULT"
+        checkIfWon()
+
+        /*Last click*/
+        binding.slumpButton.setOnClickListener() {
+
+            checkIfWon()
+        }
+    }
+
+    /**
+     *
+     */
+    private fun popupWin() {
+
+        val alert = AlertDialog.Builder(this, R.style.MyDialogTheme)
+
+        alert.setTitle("Ezzz")
+        alert.setMessage("Congratz! You won!")
+        alert.setPositiveButton("Play Again") { dialog, _ ->
+
+            saveStats()
+            dialog.cancel()
+
+            val intent = Intent(this, List10Activity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        alert.setNegativeButton("Exit") {_, _ ->
+
+            quit()
+        }.create()
+
+        alert.show()
+    }
+
+    /**
+     *
+     */
+    private fun popupLose() {
+
+        val alert = AlertDialog.Builder(this, R.style.MyDialogTheme)
+
+        alert.setTitle("LOSER")
+        alert.setMessage("You loss")
+        alert.setPositiveButton("Play Again") { dialog, _ ->
+
+            dialog.cancel()
+            saveStats()
+
+            val intent = Intent(this, List10Activity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        alert.setNegativeButton("Exit") {_, _ ->
+
+            quit()
+        }.create()
+
+        alert.show()
+    }
+
+    /**
+     *
+     */
+    private fun popupRestart() {
+
+        val alert = AlertDialog.Builder(this, R.style.MyDialogTheme)
+
+        alert.setTitle("RESTART OR CONTINUE")
+        alert.setMessage("You loss. Do you want to restart or continue?")
+        alert.setPositiveButton("Restart") { dialog, _ ->
+
+            val intent = Intent(this, List5Activity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        alert.setNegativeButton("Continue") {_, _ ->
+
+            closeContextMenu()
+        }.create()
+
+        alert.show()
+    }
+
+    /**
+     *
+     */
+    private fun popupQuit() {
+
+        val alert = AlertDialog.Builder(this, R.style.MyDialogTheme)
+
+        alert.setTitle("Quit")
+        alert.setMessage("Do you want to quit?")
+        alert.setPositiveButton("YES") {_, _ ->
+
+            quit()
+        }
+
+        alert.setNegativeButton("NO") {_, _ ->
+
+            closeContextMenu()
+        }.create()
+
+        alert.show()
+    }
+
+    /**
+     * Save stats.
+     */
+    private fun saveStats() {
+
+        val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+
+        editor.putInt("winsList", won)
+        editor.putInt("69", sixnine)
+        editor.putInt("666", sixsixsix)
+        editor.putInt("420", fourtwenty)
+        editor.apply()
+    }
+
+    /**
+     *
+     */
+    private fun quitButtonInit() {
+
+        binding.quitButton.setOnClickListener() {
+
+            popupQuit()
+        }
+    }
+
+    /**
+     * Quit.
+     */
+    private fun quit() {
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    /**
+     *
+     */
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this, PlayActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+}

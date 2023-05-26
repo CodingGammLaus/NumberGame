@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#24272C">
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/quit_button"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="QUIT"
+            android:textSize="20sp"
+            android:layout_marginStart="30dp"
+            android:background="@drawable/main_button"
+            app:backgroundTint="@null" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/game_type"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:hint="Game"
+            app:boxStrokeColor="@color/white"
+            app:endIconTint="@color/white"
+            android:textColorHint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/text_throws"
+            app:layout_constraintEnd_toStartOf="@+id/info_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_info" >
+
+            <AutoCompleteTextView
+                android:id="@+id/drop_down_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="List 5"
+                android:focusable="false"
+                android:textColor="@color/white"
+                android:inputType="none"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/box_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/menu">
+
+        <TextView
+            android:id="@+id/number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number: "
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/box_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box_2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1:"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="50dp"/>
+
+        <Button
+            android:id="@+id/button_1"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:text=""
+            android:textSize="40sp"
+            android:background="@drawable/main_button"
+            app:backgroundTint="@null"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/box_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/box_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box_1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2:"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="50dp"/>
+
+        <Button
+            android:id="@+id/button_2"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:text=""
+            android:textSize="40sp"
+            android:background="@drawable/main_button"
+            app:backgroundTint="@null"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/box_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/box_4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box_2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3:"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="50dp"/>
+
+        <Button
+            android:id="@+id/button_3"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:text=""
+            android:textSize="40sp"
+            android:background="@drawable/main_button"
+            app:backgroundTint="@null"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/box_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/box_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box_3">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4:"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="50dp"/>
+
+        <Button
+            android:id="@+id/button_4"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:text=""
+            android:textSize="40sp"
+            android:background="@drawable/main_button"
+            app:backgroundTint="@null"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/box_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/slump_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box_4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5:"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/white"
+            android:layout_marginEnd="50dp"/>
+
+        <Button
+            android:id="@+id/button_5"
+            android:layout_width="200dp"
+            android:layout_height="70dp"
+            android:text=""
+            android:textSize="40sp"
+            android:background="@drawable/main_button"
+            app:backgroundTint="@null"
+            android:enabled="false"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/slump_button"
+        android:layout_width="300dp"
+        android:layout_height="75dp"
+        android:text="START"
+        android:textSize="40sp"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box_5"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

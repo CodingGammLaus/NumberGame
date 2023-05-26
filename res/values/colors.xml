@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="orange">#FD8259</color>
+    <color name="orange_shadow">#E1541F</color>
+    <color name="orange_dark">#F69856</color>
+    <color name="pressed_orange">#DC9378</color>
+    <color name="pressed_orange_shadow">#FFB582</color>
+
+    <color name="red">#F7203C</color>
+    <color name="red_shadow">#BB061E</color>
+
+    <color name="green">#31F06A</color>
+    <color name="green_shadow">#32A956</color>
+
+    <color name="green_dark">#46A649</color>
+
+    <color name="dark_grey">#424141</color>
+    <color name="light_green">#60F2D8</color>
+    <color name="main_green">#68FE9A</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color">#fff</color>
+</resources>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#24272C">
+
+    <Button
+        android:id="@+id/quit_button"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="QUIT"
+        android:textSize="20sp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/box"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <LinearLayout
+        android:id="@+id/box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/box2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/quit_button">
+
+        <TextView
+            android:id="@+id/number_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Number: "
+            android:textColor="@color/white"
+            android:textSize="50sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/box2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/higher_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box">
+
+    <TextView
+        android:id="@+id/circle"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:gravity="center"
+        android:layout_marginBottom="100dp"
+        android:background="@drawable/circle" />
+
+    <TextView
+        android:id="@+id/point_text"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:text="Points 0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/circle"
+        android:layout_alignTop="@id/circle"
+        android:layout_alignRight="@id/circle"
+        android:layout_alignBottom="@id/circle"
+        android:gravity="center"/>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/higher_button"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:text="START"
+        android:textSize="40sp"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toTopOf="@id/lower_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box2"/>
+
+    <Button
+        android:id="@+id/lower_button"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:text="LOWER"
+        android:textSize="40sp"
+        android:background="@drawable/main_button"
+        app:backgroundTint="@null"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/higher_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
