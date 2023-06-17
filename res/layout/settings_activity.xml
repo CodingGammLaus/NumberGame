@@ -1,209 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.amar.library.ui.StickyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#24272C">
+    app:stickyHeader="@+id/box">
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="BACK"
-        android:textSize="19sp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/main_button"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@id/main_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SETTINGS"
-        android:textStyle="bold"
-        android:textSize="48sp"
-        android:textColor="@color/white"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@id/box1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/box1"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical"
-        android:background="@drawable/popup_grey"
-        app:layout_constraintBottom_toTopOf="@id/box2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_text" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="List number"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/list_intervall_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1-1000"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textSize="30sp"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/change_list_intervall"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="CHANGE"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/main_button"
-            app:backgroundTint="@null"
-            android:layout_gravity="center"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/box2"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical"
-        android:background="@drawable/popup_grey"
-        app:layout_constraintBottom_toTopOf="@id/box3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/box1" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Higher / Lower"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textColor="@color/white"/>
-
-        <TextView
-            android:id="@+id/higher_intervall_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1-1000"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textSize="30sp"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/change_higher_intervall"
-            android:layout_width="200dp"
-            android:layout_height="60dp"
-            android:text="CHANGE"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/main_button"
-            app:backgroundTint="@null"
-            android:layout_gravity="center"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/box3"
-        android:layout_width="match_parent"
-        android:layout_height="220dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="vertical"
-        android:background="@drawable/popup_grey"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/box2" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guess"
-            android:textStyle="bold"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"
-            android:textColor="@color/white"/>
+        android:layout_height="match_parent"
+        android:background="@drawable/background">
 
         <LinearLayout
+            android:id="@+id/box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:gravity="center">
-
-        <TextView
-            android:id="@+id/guess_intervall_text"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="1-100"
-            android:layout_gravity="center"
-            android:textSize="30sp"
-            android:textColor="@color/white"/>
-
-        <Button
-            android:id="@+id/change_guess_intervall"
-            android:layout_width="130dp"
-            android:layout_height="60dp"
-            android:text="CHANGE"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:background="@drawable/main_button"
-            app:backgroundTint="@null"
-            android:layout_gravity="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:gravity="center">
-
-            <TextView
-                android:id="@+id/guess_game_text"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Guess: 5"
-                android:layout_gravity="center"
-                android:textSize="30sp"
-                android:textColor="@color/white"/>
+            app:layout_constraintBottom_toTopOf="@id/main_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <Button
-                android:id="@+id/change_guess_game"
-                android:layout_width="130dp"
-                android:layout_height="60dp"
-                android:text="SET 10"
-                android:textStyle="bold"
-                android:textSize="22sp"
-                android:background="@drawable/main_button"
-                app:backgroundTint="@null"
-                android:layout_gravity="center"/>
+                android:id="@+id/back_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="BACK"
+                android:textSize="19sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/regular_button"
+                app:backgroundTint="@null"/>
         </LinearLayout>
-    </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SETTINGS"
+            android:textStyle="bold"
+            android:textSize="48sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="70dp"
+            app:layout_constraintBottom_toTopOf="@id/box1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/box1"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/box2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_text">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="List number"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/list_intervall_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="0-1000"
+                    android:layout_gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/change_list_intervall"
+                    android:layout_width="130dp"
+                    android:layout_height="60dp"
+                    android:text="CHANGE"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/regular_button"
+                    app:backgroundTint="@null"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/reroll_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Reroll: 0"
+                    android:layout_marginStart="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"/>
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="20dp"
+                    android:min="0"
+                    android:max="10"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box2"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/box3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box1" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Higher / Lower"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/higher_intervall_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="0-1000"
+                    android:layout_gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/change_higher_intervall"
+                    android:layout_width="130dp"
+                    android:layout_height="60dp"
+                    android:text="CHANGE"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/regular_button"
+                    app:backgroundTint="@null"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/lives_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Lives: 0"
+                    android:layout_marginStart="15dp"
+                    android:layout_gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"/>
+
+                <SeekBar
+                    android:id="@+id/seekBar_lives"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="20dp"
+                    android:min="0"
+                    android:max="3"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/reset_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box2" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Guess"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/guess_intervall_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="0-100"
+                    android:layout_gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/change_guess_intervall"
+                    android:layout_width="130dp"
+                    android:layout_height="60dp"
+                    android:text="CHANGE"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/regular_button"
+                    app:backgroundTint="@null"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tba_text"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="TBA"
+                    android:layout_gravity="center"
+                    android:textSize="30sp"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/button_tba"
+                    android:layout_width="130dp"
+                    android:layout_height="60dp"
+                    android:text="CHANGE"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:background="@drawable/regular_button"
+                    app:backgroundTint="@null"
+                    android:layout_gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:text="RESET SETTINGS"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/regular_button"
+            app:backgroundTint="@null"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box3"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.amar.library.ui.StickyScrollView>

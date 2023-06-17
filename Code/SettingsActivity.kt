@@ -3,10 +3,15 @@ package se.umu.cs.dv21sln.numbergame
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.view.animation.AnimationUtils
 import android.widget.EditText
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import se.umu.cs.dv21sln.numbergame.databinding.SettingsActivityBinding
+
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -15,7 +20,8 @@ class SettingsActivity : AppCompatActivity() {
     private var listInterval = 1000
     private var higherInterval = 1000
     private var guessInterval = 100
-    private var guessGuesses = 5
+    private var reroll = 0
+    private var lives = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +35,9 @@ class SettingsActivity : AppCompatActivity() {
         changeListIntervalInit()
         changeHigherIntervalInit()
         changeGuessIntervalInit()
-        setGuessesInit()
+        resetSettingsBtnInit()
+        seekBar()
+        livesSeekBar()
     }
 
     /**
@@ -42,20 +50,16 @@ class SettingsActivity : AppCompatActivity() {
         listInterval = sharedPref.getInt("listInterval", 1000)
         higherInterval = sharedPref.getInt("higherInterval", 1000)
         guessInterval = sharedPref.getInt("guessInterval", 100)
-        guessGuesses = sharedPref.getInt("guessGuesses", 5)
+        reroll = sharedPref.getInt("reroll", 0)
+        lives = sharedPref.getInt("lives", 0)
 
-        binding.listIntervallText.text = "1-" + listInterval.toString()
-        binding.higherIntervallText.text = "1-" + higherInterval.toString()
-        binding.guessIntervallText.text = "1-" + guessInterval.toString()
-        binding.guessGameText.text = "Guess: " + guessGuesses.toString()
-
-        if(guessGuesses == 10) {
-            binding.changeGuessGame.text = "SET 5"
-        }
-
-        else {
-            binding.changeGuessGame.text = "SET 10"
-        }
+        binding.listIntervallText.text = "0-" + listInterval.toString()
+        binding.higherIntervallText.text = "0-" + higherInterval.toString()
+        binding.guessIntervallText.text = "0-" + guessInterval.toString()
+        binding.rerollText.text = "Reroll: " + reroll.toString()
+        binding.seekBar.progress = reroll
+        binding.livesText.text = "Lives: " + lives.toString()
+        binding.seekBarLives.progress = lives
     }
 
     /**
@@ -65,6 +69,7 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.backButton.setOnClickListener() {
 
+            binding.backButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
             saveStats()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -94,14 +99,52 @@ class SettingsActivity : AppCompatActivity() {
 
                     if(listInterval < 1) {
 
-                        listInterval = 2
+                        listInterval = 1
                     }
                 }
 
-                binding.listIntervallText.text = "1-" + listInterval.toString()
+                binding.listIntervallText.text = "0-" + listInterval.toString()
             }
             alert.show()
         }
+    }
+
+    /**
+     *
+     */
+    private fun seekBar() {
+
+        binding.seekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+                binding.rerollText.text = "Reroll: " + progress
+
+                reroll = progress
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+    }
+
+    /**
+     *
+     */
+    private fun livesSeekBar() {
+
+        binding.seekBarLives.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+
+                binding.livesText.text = "Lives: " + progress
+
+                lives = progress
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
     }
 
     /**
@@ -126,11 +169,11 @@ class SettingsActivity : AppCompatActivity() {
 
                     if(higherInterval < 1) {
 
-                        higherInterval = 2
+                        higherInterval = 1
                     }
                 }
 
-                binding.higherIntervallText.text = "1-" + higherInterval.toString()
+                binding.higherIntervallText.text = "0-" + higherInterval.toString()
             }
             alert.show()
         }
@@ -158,36 +201,13 @@ class SettingsActivity : AppCompatActivity() {
 
                     if(guessInterval < 1) {
 
-                        guessInterval = 2
+                        guessInterval = 1
                     }
                 }
 
-                binding.guessIntervallText.text = "1-" + guessInterval.toString()
+                binding.guessIntervallText.text = "0-" + guessInterval.toString()
             }
             alert.show()
-        }
-    }
-
-    /**
-     *
-     */
-    private fun setGuessesInit() {
-
-        binding.changeGuessGame.setOnClickListener() {
-
-            if(guessGuesses == 5) {
-
-                guessGuesses = 10
-                binding.changeGuessGame.text = "SET 5"
-                binding.guessGameText.text = "Guess: 10"
-            }
-
-            else {
-
-                guessGuesses = 5
-                binding.changeGuessGame.text = "SET 10"
-                binding.guessGameText.text = "Guess: 5"
-            }
         }
     }
 
@@ -202,8 +222,63 @@ class SettingsActivity : AppCompatActivity() {
         editor.putInt("listInterval", listInterval)
         editor.putInt("higherInterval", higherInterval)
         editor.putInt("guessInterval", guessInterval)
-        editor.putInt("guessGuesses", guessGuesses)
+        editor.putInt("reroll", reroll)
+        editor.putInt("lives", lives)
         editor.apply()
+    }
+
+    /**
+     *
+     */
+    private fun resetSettingsBtnInit() {
+
+       binding.resetButton.setOnClickListener() {
+
+           val alert = android.app.AlertDialog.Builder(this, R.style.MyDialogTheme)
+
+           alert.setTitle("Reset settings")
+           alert.setMessage("Do you want to reset the settings?")
+           alert.setPositiveButton("YES") {_, _ ->
+
+               shake()
+               resetSettings()
+           }
+
+           alert.setNegativeButton("NO") {_, _ ->
+
+               closeContextMenu()
+           }.create()
+
+           alert.show()
+       }
+    }
+
+    /**
+     *
+     */
+    private fun shake() {
+
+        binding.box1.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
+        binding.box2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
+        binding.box3.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake))
+    }
+
+    /**
+     *
+     */
+    private fun resetSettings() {
+
+        listInterval = 1000
+        higherInterval = 1000
+        guessInterval = 100
+        reroll = 0
+        lives = 0
+
+        binding.listIntervallText.text = "0-" + listInterval.toString()
+        binding.higherIntervallText.text = "0-" + higherInterval.toString()
+        binding.guessIntervallText.text = "0-" + guessInterval.toString()
+        binding.seekBar.progress = reroll
+        binding.seekBarLives.progress = lives
     }
 
     /**

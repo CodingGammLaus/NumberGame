@@ -37,6 +37,16 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".PlayActivity"/>
         <activity
+            android:name=".List20Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".PlayActivity"/>
+        <activity
+            android:name=".OrderNumberActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".PlayActivity"/>
+        <activity
             android:name=".PlayActivity"
             android:exported="false"
             android:screenOrientation="portrait"

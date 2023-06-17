@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#24272C">
+    android:background="@drawable/background">
 
     <Button
         android:id="@+id/quit_button"
@@ -13,9 +13,9 @@
         android:text="QUIT"
         android:textSize="20sp"
         android:layout_marginStart="30dp"
-        android:background="@drawable/main_button"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/regular_button"
         app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@id/box"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -46,33 +46,63 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@id/higher_button"
+        app:layout_constraintBottom_toTopOf="@id/heart_box"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/box">
 
-    <TextView
-        android:id="@+id/circle"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:gravity="center"
-        android:layout_marginBottom="100dp"
-        android:background="@drawable/circle" />
+        <TextView
+            android:id="@+id/circle"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:gravity="center"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/circle" />
 
-    <TextView
-        android:id="@+id/point_text"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:text="Points 0"
+        <TextView
+            android:id="@+id/point_text"
+            android:textColor="@color/white"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:text="Points 0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/circle"
+            android:layout_alignTop="@id/circle"
+            android:layout_alignRight="@id/circle"
+            android:layout_alignBottom="@id/circle"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/heart_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@id/circle"
-        android:layout_alignTop="@id/circle"
-        android:layout_alignRight="@id/circle"
-        android:layout_alignBottom="@id/circle"
-        android:gravity="center"/>
-    </RelativeLayout>
+        app:layout_constraintBottom_toTopOf="@id/higher_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/box2">
+
+        <ImageView
+            android:id="@+id/lives_1"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/baseline_favorite_48"/>
+
+        <ImageView
+            android:id="@+id/lives_2"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            app:srcCompat="@drawable/baseline_favorite_48"/>
+
+        <ImageView
+            android:id="@+id/lives_3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/baseline_favorite_48"/>
+    </LinearLayout>
 
     <Button
         android:id="@+id/higher_button"
@@ -80,12 +110,12 @@
         android:layout_height="80dp"
         android:text="START"
         android:textSize="40sp"
-        android:background="@drawable/main_button"
+        android:background="@drawable/regular_button"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toTopOf="@id/lower_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/box2"/>
+        app:layout_constraintTop_toBottomOf="@id/heart_box"/>
 
     <Button
         android:id="@+id/lower_button"
@@ -93,7 +123,7 @@
         android:layout_height="80dp"
         android:text="LOWER"
         android:textSize="40sp"
-        android:background="@drawable/main_button"
+        android:background="@drawable/regular_button"
         app:backgroundTint="@null"
         android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"

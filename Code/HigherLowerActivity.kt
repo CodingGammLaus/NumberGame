@@ -3,10 +3,12 @@ package se.umu.cs.dv21sln.numbergame
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import se.umu.cs.dv21sln.numbergame.databinding.HigherLowerActivityBinding
 
 
@@ -19,10 +21,13 @@ class HigherLowerActivity : AppCompatActivity() {
     private var newNumber = 0
     private var points = 0
     private var highestPoints = 0
+    private var played = 0
+    private var lives = 0
 
     private var sixnine = 0
     private var sixsixsix = 0
     private var fourtwenty = 0
+    private var elite = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,7 @@ class HigherLowerActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loadInStats()
+        lives()
         startGame()
         quitInit()
     }
@@ -43,10 +49,36 @@ class HigherLowerActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
         highestPoints = sharedPref.getInt("winsHigher", 0)
+        played = sharedPref.getInt("playedHigher", 0)
         sixnine = sharedPref.getInt("69", 0)
         sixsixsix = sharedPref.getInt("666", 0)
         fourtwenty = sharedPref.getInt("420", 0)
+        elite = sharedPref.getInt("1337", 0)
         interval = sharedPref.getInt("higherInterval", 1000)
+        lives = sharedPref.getInt("lives", 0)
+    }
+
+    /**
+     *
+     */
+    private fun lives() {
+
+        if(lives == 0) {
+            binding.lives1.isVisible = false
+            binding.lives2.isVisible = false
+            binding.lives3.isVisible = false
+        }
+
+        else if(lives == 1) {
+
+            binding.lives2.isVisible = false
+            binding.lives3.isVisible = false
+        }
+
+        else if(lives == 2) {
+
+            binding.lives3.isVisible = false
+        }
     }
 
     /**
@@ -56,7 +88,11 @@ class HigherLowerActivity : AppCompatActivity() {
 
         binding.higherButton.setOnClickListener() {
 
-            newNumber = (1..interval).random()
+            binding.higherButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
+
+            played++
+
+            newNumber = (0..interval).random()
             binding.numberText.text = "Number: " + newNumber.toString()
             slumpAnimation()
             currentNumber = newNumber
@@ -75,17 +111,19 @@ class HigherLowerActivity : AppCompatActivity() {
 
         binding.higherButton.setOnClickListener() {
 
+            binding.higherButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
+
             slump()
 
             if(newNumber < currentNumber) {
 
-                lose()
+                checkLives()
             }
 
             else {
 
                 points++
-                binding.pointText.text = "Points: " + points
+                binding.pointText.text = "Points " + points
 
                 pointAnimation()
             }
@@ -103,22 +141,63 @@ class HigherLowerActivity : AppCompatActivity() {
 
         binding.lowerButton.setOnClickListener() {
 
+            binding.lowerButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
+
             slump()
 
             if(newNumber > currentNumber) {
 
-                lose()
+                checkLives()
             }
 
             else {
                 points++
-                binding.pointText.text = "Points: " + points
+                binding.pointText.text = "Points " + points
 
                 pointAnimation()
             }
 
             currentNumber = newNumber
         }
+    }
+
+    /**
+     *
+     */
+    private fun checkLives() {
+
+        if(lives <= 0) {
+            lose()
+        }
+
+        else if(lives == 1) {
+
+            Handler().postDelayed(Runnable {
+                binding.lives1.setImageResource(R.drawable.baseline_favorite_border_48)
+            }, 300)
+
+            binding.lives1.startAnimation(AnimationUtils.loadAnimation(this, R.anim.lives_loss))
+        }
+
+        else if(lives == 2) {
+
+            Handler().postDelayed(Runnable {
+                binding.lives2.setImageResource(R.drawable.baseline_favorite_border_48)
+            }, 300)
+
+            binding.lives2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.lives_loss))
+        }
+
+        else if(lives == 3) {
+
+            Handler().postDelayed(Runnable {
+                binding.lives3.setImageResource(R.drawable.baseline_favorite_border_48)
+            }, 300)
+
+            binding.lives3.startAnimation(AnimationUtils.loadAnimation(this, R.anim.lives_loss))
+        }
+
+        lives--
     }
 
     /**
@@ -147,23 +226,38 @@ class HigherLowerActivity : AppCompatActivity() {
      */
     private fun slump() {
 
-        newNumber = (1..interval).random()
+        newNumber = (0..interval).random()
+        checkSlump()
+
         binding.numberText.text = "Number: " + newNumber.toString()
         slumpAnimation()
 
         if(newNumber == 69) {
-
             sixnine++
         }
 
         else if(newNumber == 420) {
-
             fourtwenty++
         }
 
         else if(newNumber == 666) {
-
             sixsixsix++
+        }
+
+        else if(newNumber == 1337) {
+            elite++
+        }
+    }
+
+    /**
+     *
+     */
+    private fun checkSlump() {
+
+        if(newNumber == currentNumber) {
+
+            newNumber = (0..interval).random()
+            checkSlump()
         }
     }
 
@@ -192,9 +286,11 @@ class HigherLowerActivity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
+        editor.putInt("playedHigher", played)
         editor.putInt("69", sixnine)
         editor.putInt("666", sixsixsix)
         editor.putInt("420", fourtwenty)
+        editor.putInt("1337", elite)
         editor.apply()
     }
 
@@ -258,6 +354,7 @@ class HigherLowerActivity : AppCompatActivity() {
 
         binding.quitButton.setOnClickListener() {
 
+            binding.quitButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
             popupQuit()
         }
     }
@@ -289,6 +386,7 @@ class HigherLowerActivity : AppCompatActivity() {
      */
     private fun quit() {
 
+        saveStats()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -299,6 +397,7 @@ class HigherLowerActivity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         super.onBackPressed()
+        saveStats()
         val intent = Intent(this, PlayActivity::class.java)
         startActivity(intent)
         finish()

@@ -1,250 +1,620 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.amar.library.ui.StickyScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="#24272C"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    app:stickyHeader="@+id/box">
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="BACK"
-        android:textSize="19sp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="30dp"
-        android:background="@drawable/main_button"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toTopOf="@id/main_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
-    <TextView
-        android:id="@+id/main_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="STATS"
-        android:textStyle="bold"
-        android:textSize="48sp"
-        android:textColor="@color/white"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@id/box1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/box1"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/background"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
-        android:background="@drawable/popup_grey"
-        app:layout_constraintBottom_toTopOf="@id/box2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/main_text" >
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/box"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/main_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="WINS / HIGHSCORE"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:layout_gravity="center"
-                android:textColor="@color/white"/>
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:text="BACK"
+                android:textSize="19sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="30dp"
+                android:background="@drawable/regular_button"
+                app:backgroundTint="@null" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="STATS"
+            android:textStyle="bold"
+            android:textSize="48sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toTopOf="@id/box1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="List numbers:"
-                    android:textSize="30sp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/wins_list_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="Higher/Lower:"
-                    android:textSize="30sp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/wins_higher_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/box1"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/box2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/main_text" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="Guess number:"
-                    android:textSize="30sp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/wins_guess_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="List"
+                    android:textStyle="bold"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="List 5 wins:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/list5_wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="List 10 wins:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/list10_wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="List 15 wins:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/list15_wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="List 20 wins:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/list20_wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Played:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/list_played"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/box2"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
-        android:background="@drawable/popup_grey"
-        app:layout_constraintBottom_toTopOf="@id/reset_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/box1" >
 
         <LinearLayout
+            android:id="@+id/box2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NUMBER"
-                android:textStyle="bold"
-                android:textSize="30sp"
-                android:layout_gravity="center"
-                android:textColor="@color/white"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="69:"
-                    android:textSize="30sp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/sixnine_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="420:"
-                    android:textSize="30sp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/fourtwentyText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="30sp"
-                    android:textColor="@color/white"/>
-            </LinearLayout>
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/box3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box1" >
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <TextView
-                    android:layout_width="230dp"
-                    android:layout_height="wrap_content"
-                    android:text="666:"
-                    android:textSize="30sp"
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/white"/>
-
-                <TextView
-                    android:id="@+id/sixsixsixText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="Higher/Lower"
+                    android:textStyle="bold"
                     android:textSize="30sp"
-                    android:gravity="center"
+                    android:layout_gravity="center"
                     android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Streak:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/higher_streak"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Played:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/higher_played"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="TBA:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/higher_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/reset_button"
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:text="RESET STATS"
-        android:textSize="35sp"
-        android:background="@drawable/wrong_button"
-        app:backgroundTint="@null"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/box2"/>
+        <LinearLayout
+            android:id="@+id/box3"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/box4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box2" >
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guess number"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Wins:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/guess_wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Played:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/guess_played"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="TBA:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/guess_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box4"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/box5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box3" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Right order"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Wins:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/order_wins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="Played:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/order_played"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="TBA:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/order_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/box5"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="horizontal"
+            android:background="@drawable/box"
+            app:layout_constraintBottom_toTopOf="@id/reset_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box4" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NUMBERS"
+                    android:textStyle="bold"
+                    android:textSize="30sp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="69:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/sixnine"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="420:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/fourtwenty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="666:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/sixsixsix"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="230dp"
+                        android:layout_height="wrap_content"
+                        android:text="1337:"
+                        android:textSize="30sp"
+                        android:layout_marginStart="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/elite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textSize="30sp"
+                        android:gravity="center"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:text="RESET STATS"
+            android:textSize="35sp"
+            android:background="@drawable/wrong_button"
+            app:backgroundTint="@null"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/box5"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.amar.library.ui.StickyScrollView>

@@ -18,13 +18,14 @@ class List10Activity : AppCompatActivity() {
     private var interval = 1000
 
     private var won = 0
+    private var played = 0
     private var sixnine = 0
     private var sixsixsix = 0
     private var fourtwenty = 0
     private var restart = false
 
     private lateinit var adapterItem: ArrayAdapter<String>
-    private val menuItemList = arrayListOf<String>("List 5", "List 15")
+    private val menuItemList = arrayListOf<String>("List 5", "List 15", "List 20")
 
     private var btnUsed = arrayListOf<Boolean>(false, false, false, false, false, false, false, false, false, false)
 
@@ -61,10 +62,16 @@ class List10Activity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
 
         interval = sharedPref.getInt("listInterval", 1000)
-        won = sharedPref.getInt("winsList", 0)
+        won = sharedPref.getInt("winsList10", 0)
         sixnine = sharedPref.getInt("69", 0)
         sixsixsix = sharedPref.getInt("666", 0)
         fourtwenty = sharedPref.getInt("420", 0)
+        played = sharedPref.getInt("playedList", 0)
+
+        /*Control to avoid crash*/
+        if(interval < 10) {
+            interval = 10
+        }
     }
 
     /**
@@ -90,15 +97,14 @@ class List10Activity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
+            else if (pos == 2) {
+
+                val intent = Intent(this, List20Activity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
-    }
-
-    /**
-     *
-     */
-    private fun slumpAnimation() {
-
-        binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
     }
 
     /**
@@ -109,11 +115,12 @@ class List10Activity : AppCompatActivity() {
         /*First click*/
         binding.slumpButton.setOnClickListener() {
 
+            played++
             start()
 
-            number = (1..interval).random()
+            number = (0..interval).random()
             binding.numberText.text = "Number: " + number.toString()
-            slumpAnimation()
+            binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
             binding.slumpButton.isEnabled = false
 
             checkStats()
@@ -121,14 +128,31 @@ class List10Activity : AppCompatActivity() {
             binding.slumpButton.setOnClickListener() {
 
                 if(binding.slumpButton.isEnabled) {
-                    number = (1..interval).random()
+                    number = (0..interval).random()
+                    checkDuplicate()
+
                     binding.numberText.text = "Number: " + number.toString()
-                    slumpAnimation()
+                    binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
                     binding.slumpButton.isEnabled = false
                     used++
 
                     checkStats()
                 }
+            }
+        }
+    }
+
+    /**
+     * Reroll if number exist.
+     */
+    private fun checkDuplicate() {
+
+        for(i in 0..4) {
+
+            if(number == numberArray[i]) {
+
+                number = (0..interval).random()
+                checkDuplicate()
             }
         }
     }
@@ -205,6 +229,7 @@ class List10Activity : AppCompatActivity() {
 
                     checkIfDone()
                     checkIfRestart(1)
+                    return@setOnClickListener
                 }
 
                 for(i in 2..9) {
@@ -536,12 +561,13 @@ class List10Activity : AppCompatActivity() {
                     }
                 }
 
-                if(number > numberArray[8] && btnUsed[8]) {
+                if(number > numberArray[9] && btnUsed[9]) {
 
                     binding.button9.background = resources.getDrawable(R.drawable.wrong_button)
 
                     checkIfDone()
                     checkIfRestart(8)
+                    return@setOnClickListener
                 }
 
                 numberArray[8] = number
@@ -729,7 +755,7 @@ class List10Activity : AppCompatActivity() {
         alert.setMessage("You loss. Do you want to restart or continue?")
         alert.setPositiveButton("Restart") { dialog, _ ->
 
-            val intent = Intent(this, List5Activity::class.java)
+            val intent = Intent(this, List10Activity::class.java)
             startActivity(intent)
             finish()
         }
@@ -772,10 +798,11 @@ class List10Activity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        editor.putInt("winsList", won)
+        editor.putInt("winsList10", won)
         editor.putInt("69", sixnine)
         editor.putInt("666", sixsixsix)
         editor.putInt("420", fourtwenty)
+        editor.putInt("playedList", played)
         editor.apply()
     }
 
@@ -786,6 +813,7 @@ class List10Activity : AppCompatActivity() {
 
         binding.quitButton.setOnClickListener() {
 
+            binding.quitButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
             popupQuit()
         }
     }
@@ -795,6 +823,7 @@ class List10Activity : AppCompatActivity() {
      */
     private fun quit() {
 
+        saveStats()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -805,6 +834,7 @@ class List10Activity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         super.onBackPressed()
+        saveStats()
         val intent = Intent(this, PlayActivity::class.java)
         startActivity(intent)
         finish()

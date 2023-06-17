@@ -4,7 +4,8 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputFilter
-import android.widget.LinearLayout
+import android.view.animation.AnimationUtils
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import se.umu.cs.dv21sln.numbergame.databinding.GuessNumberActivityBinding
@@ -20,6 +21,9 @@ class GuessNumberActivity : AppCompatActivity() {
     var numberWon = 0
     var guesses = 5
 
+    private lateinit var adapterItem: ArrayAdapter<String>
+    private val menuItemList = arrayListOf<String>("5 Guesses", "10 Guesses")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,10 +32,11 @@ class GuessNumberActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         loadInStats()
+        setUpMenu()
         backButtonInit()
         guessButtonInit()
 
-        binding.guess.hint = "Guess on a number between 1-" + interval.toString()
+        binding.guess.hint = "Guess 0-" + interval.toString()
 
         setMaxLength()
 
@@ -54,6 +59,38 @@ class GuessNumberActivity : AppCompatActivity() {
         numberWon = sharedPref.getInt("winsGuess", 0)
         interval = sharedPref.getInt("guessInterval", 100)
         guesses = sharedPref.getInt("guessGuesses", 5)
+    }
+
+    /**
+     *
+     */
+    private fun setUpMenu() {
+
+        adapterItem = ArrayAdapter(this, R.layout.menu_item, menuItemList)
+        binding.dropDownMenu.setAdapter(adapterItem)
+
+        binding.dropDownMenu.setOnItemClickListener { _, _, pos, _ ->
+
+            val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
+            val editor = sharedPref.edit()
+
+            if(pos == 0) {
+
+                guesses = 5
+            }
+
+            else if (pos == 1) {
+
+                guesses = 10
+            }
+
+            editor.putInt("guessGuesses", guesses)
+            editor.apply()
+
+            val intent = Intent(this, GuessNumberActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     /**
@@ -92,8 +129,9 @@ class GuessNumberActivity : AppCompatActivity() {
      */
     private fun backButtonInit() {
 
-        binding.backButton.setOnClickListener() {
+        binding.quitButton.setOnClickListener() {
 
+            binding.quitButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
             popupQuit()
         }
     }
@@ -105,8 +143,8 @@ class GuessNumberActivity : AppCompatActivity() {
 
         binding.playButton.setOnClickListener() {
 
-            number = (1..interval).random()
-            binding.playButton.text = "GUESS " + number.toString()
+            number = (0..interval).random()
+            binding.playButton.text = "GUESS"
             binding.guess.isVisible = true
 
             guessingInit()
@@ -391,6 +429,7 @@ class GuessNumberActivity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         super.onBackPressed()
+        saveStats()
         val intent = Intent(this, PlayActivity::class.java)
         startActivity(intent)
         finish()

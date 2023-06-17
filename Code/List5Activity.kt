@@ -1,6 +1,7 @@
 package se.umu.cs.dv21sln.numbergame
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -22,13 +23,17 @@ class List5Activity : AppCompatActivity() {
     private var btnUsed = arrayListOf<Boolean>(false, false, false, false, false)
     private lateinit var win: MediaPlayer
     private var won = 0
+    private var played = 0
     private var sixnine = 0
     private var sixsixsix = 0
     private var fourtwenty = 0
+    private var elite = 0
     private var restart = false
+    private var reroll = 0
+    private var canReroll = true
 
     private lateinit var adapterItem: ArrayAdapter<String>
-    private val menuItemList = arrayListOf<String>("List 10", "List 15")
+    private val menuItemList = arrayListOf<String>("List 10", "List 15", "List 20")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,10 +65,19 @@ class List5Activity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
 
         interval = sharedPref.getInt("listInterval", 1000)
-        won = sharedPref.getInt("winsList", 0)
+
+        won = sharedPref.getInt("winsList5", 0)
+        played = sharedPref.getInt("playedList", 0)
         sixnine = sharedPref.getInt("69", 0)
         sixsixsix = sharedPref.getInt("666", 0)
         fourtwenty = sharedPref.getInt("420", 0)
+        elite = sharedPref.getInt("elite", 0)
+        reroll = sharedPref.getInt("reroll", 0)
+
+        /*Control to avoid crash*/
+        if(interval < 5) {
+            interval = 5
+        }
     }
 
     /**
@@ -89,15 +103,14 @@ class List5Activity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+
+            else if (pos == 2) {
+
+                val intent = Intent(this, List20Activity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }
-    }
-
-    /**
-     *
-     */
-    private fun slumpAnimation() {
-
-        binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
     }
 
     /**
@@ -108,33 +121,88 @@ class List5Activity : AppCompatActivity() {
         /*First click*/
         binding.slumpButton.setOnClickListener() {
 
-            binding.slumpButton.text = "SLUMP"
+            binding.slumpButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
+            played++
+
+            binding.slumpButton.text = "ReRoll x " + reroll.toString()
             binding.button1.isEnabled = true
             binding.button2.isEnabled = true
             binding.button3.isEnabled = true
             binding.button4.isEnabled = true
             binding.button5.isEnabled = true
 
-            number = (1..interval).random()
+            number = (0..interval).random()
             binding.numberText.text = "Number: " + number.toString()
-            slumpAnimation()
-            binding.slumpButton.isEnabled = false
+            binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
 
             checkStats()
 
+            if(reroll < 1) {
+
+                canReroll = false
+                binding.slumpButton.isEnabled = false
+                binding.slumpButton.text = "SLUMP"
+            }
+
             binding.slumpButton.setOnClickListener() {
 
-                if(binding.slumpButton.isEnabled) {
-                    number = (1..interval).random()
-                    binding.numberText.text = "Number: " + number.toString()
-                    slumpAnimation()
-                    binding.slumpButton.isEnabled = false
-                    used++
-
-                    checkStats()
-                }
+                binding.slumpButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
+                roll()
             }
         }
+    }
+
+    /**
+     *
+     */
+    private fun roll() {
+
+        if(binding.slumpButton.isEnabled && !canReroll) {
+
+            number = (0..interval).random()
+            checkDuplicate()
+
+            binding.numberText.text = "Number: " + number.toString()
+            binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
+            used++
+            canReroll = true
+
+            if(reroll > 0) {
+
+                binding.slumpButton.text = "ReRoll x " + reroll.toString()
+            }
+
+            checkStats()
+        }
+
+        else if(canReroll) {
+
+            reroll()
+        }
+
+        if(reroll < 1) {
+
+            canReroll = false
+            binding.slumpButton.isEnabled = false
+            binding.slumpButton.text = "SLUMP"
+        }
+    }
+
+    /**
+     *
+     */
+    private fun reroll() {
+
+        number = (0..interval).random()
+        checkDuplicate()
+
+        binding.numberText.text = "Number: " + number.toString()
+        binding.numberText.startAnimation(AnimationUtils.loadAnimation(this, R.anim.popout))
+        reroll--
+
+        binding.slumpButton.text = "ReRoll x " + reroll.toString()
+
+        checkStats()
     }
 
     /**
@@ -153,6 +221,25 @@ class List5Activity : AppCompatActivity() {
         else if(number == 420) {
             fourtwenty++
         }
+
+        else if(number == 1337) {
+            elite++
+        }
+    }
+
+    /**
+     * Reroll if number exist.
+     */
+    private fun checkDuplicate() {
+
+        for(i in 0..4) {
+
+            if(number == numberArray[i]) {
+
+                number = (0..interval).random()
+                checkDuplicate()
+            }
+        }
     }
 
     /**
@@ -162,7 +249,7 @@ class List5Activity : AppCompatActivity() {
 
         binding.button1.setOnClickListener() {
 
-            if(!binding.slumpButton.isEnabled) {
+            if(!binding.slumpButton.isEnabled || canReroll) {
 
                 if(number > numberArray[1] && btnUsed[1]) {
 
@@ -193,12 +280,13 @@ class List5Activity : AppCompatActivity() {
                 }
 
                 binding.button1.isEnabled = false
+                binding.number1.startAnimation(AnimationUtils.loadAnimation(this, R.anim.drop_number))
                 binding.button1.text = number.toString()
-                binding.slumpButton.isEnabled = true
+                setUpSlumpBtn()
+                checkIfRestart(0)
             }
 
             checkIfDone()
-            checkIfRestart(0)
         }
     }
 
@@ -209,7 +297,7 @@ class List5Activity : AppCompatActivity() {
 
         binding.button2.setOnClickListener() {
 
-            if(!binding.slumpButton.isEnabled) {
+            if(!binding.slumpButton.isEnabled || canReroll) {
 
                 if(number < numberArray[0] && btnUsed[0]) {
 
@@ -241,11 +329,12 @@ class List5Activity : AppCompatActivity() {
 
                 binding.button2.isEnabled = false
                 binding.button2.text = number.toString()
-                binding.slumpButton.isEnabled = true
+                binding.number2.startAnimation(AnimationUtils.loadAnimation(this, R.anim.drop_number))
+                setUpSlumpBtn()
+                checkIfRestart(1)
             }
 
             checkIfDone()
-            checkIfRestart(1)
         }
     }
 
@@ -256,7 +345,7 @@ class List5Activity : AppCompatActivity() {
 
         binding.button3.setOnClickListener() {
 
-            if(!binding.slumpButton.isEnabled) {
+            if(!binding.slumpButton.isEnabled || canReroll) {
 
                 if(number < numberArray[0] && btnUsed[0]) {
 
@@ -288,11 +377,12 @@ class List5Activity : AppCompatActivity() {
 
                 binding.button3.isEnabled = false
                 binding.button3.text = number.toString()
-                binding.slumpButton.isEnabled = true
+                binding.number3.startAnimation(AnimationUtils.loadAnimation(this, R.anim.drop_number))
+                setUpSlumpBtn()
+                checkIfRestart(2)
             }
 
             checkIfDone()
-            checkIfRestart(2)
         }
     }
 
@@ -303,7 +393,7 @@ class List5Activity : AppCompatActivity() {
 
         binding.button4.setOnClickListener() {
 
-            if(!binding.slumpButton.isEnabled) {
+            if(!binding.slumpButton.isEnabled || canReroll) {
 
                 if(number < numberArray[0] && btnUsed[0]) {
 
@@ -335,11 +425,12 @@ class List5Activity : AppCompatActivity() {
 
                 binding.button4.isEnabled = false
                 binding.button4.text = number.toString()
-                binding.slumpButton.isEnabled = true
+                binding.number4.startAnimation(AnimationUtils.loadAnimation(this, R.anim.drop_number))
+                setUpSlumpBtn()
+                checkIfRestart(3)
             }
 
             checkIfDone()
-            checkIfRestart(3)
         }
     }
 
@@ -350,7 +441,7 @@ class List5Activity : AppCompatActivity() {
 
         binding.button5.setOnClickListener() {
 
-            if(!binding.slumpButton.isEnabled) {
+            if(!binding.slumpButton.isEnabled || canReroll) {
 
                 if(number < numberArray[0] && btnUsed[0]) {
 
@@ -382,12 +473,23 @@ class List5Activity : AppCompatActivity() {
 
                 binding.button5.isEnabled = false
                 binding.button5.text = number.toString()
-                binding.slumpButton.isEnabled = true
+                binding.number5.startAnimation(AnimationUtils.loadAnimation(this, R.anim.drop_number))
+                setUpSlumpBtn()
+                checkIfRestart(4)
             }
 
             checkIfDone()
-            checkIfRestart(4)
         }
+    }
+
+    /**
+     *
+     */
+    private fun setUpSlumpBtn() {
+
+        binding.slumpButton.text = "SLUMP"
+        binding.slumpButton.isEnabled = true
+        canReroll = false
     }
 
     /**
@@ -489,7 +591,6 @@ class List5Activity : AppCompatActivity() {
         alert.setPositiveButton("Play Again") { dialog, _ ->
 
             saveStats()
-
             val intent = Intent(this, List5Activity::class.java)
             startActivity(intent)
             finish()
@@ -514,6 +615,7 @@ class List5Activity : AppCompatActivity() {
         alert.setMessage("You loss. Do you want to restart or continue?")
         alert.setPositiveButton("Restart") { dialog, _ ->
 
+            saveStats()
             val intent = Intent(this, List5Activity::class.java)
             startActivity(intent)
             finish()
@@ -556,6 +658,7 @@ class List5Activity : AppCompatActivity() {
 
         binding.quitButton.setOnClickListener() {
 
+            binding.quitButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slump_btn))
             popupQuit()
         }
     }
@@ -568,10 +671,12 @@ class List5Activity : AppCompatActivity() {
         val sharedPref = getSharedPreferences("statsList", MODE_PRIVATE)
         val editor = sharedPref.edit()
 
-        editor.putInt("winsList", won)
+        editor.putInt("winsList5", won)
+        editor.putInt("playedList", played)
         editor.putInt("69", sixnine)
         editor.putInt("666", sixsixsix)
         editor.putInt("420", fourtwenty)
+        editor.putInt("1337", elite)
         editor.apply()
     }
 
@@ -592,6 +697,7 @@ class List5Activity : AppCompatActivity() {
      */
     override fun onBackPressed() {
         super.onBackPressed()
+        saveStats()
         val intent = Intent(this, PlayActivity::class.java)
         startActivity(intent)
         finish()

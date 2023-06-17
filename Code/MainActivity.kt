@@ -1,10 +1,15 @@
 package se.umu.cs.dv21sln.numbergame
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
-import android.content.res.Resources
+import android.view.View.OnTouchListener
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.AnimationUtils
 import se.umu.cs.dv21sln.numbergame.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -28,12 +33,42 @@ class MainActivity : AppCompatActivity() {
      */
     private fun playInit() {
 
+        playPressed()
+
         binding.playButton.setOnClickListener() {
 
-            val intent = Intent(this, PlayActivity::class.java)
-            startActivity(intent)
-            finish()
+            binding.settingsButton.isEnabled = false
+            binding.statsButton.isEnabled = false
+            binding.playButton.isEnabled = false
+
+            Handler().postDelayed(Runnable {
+                val intent = Intent(this, PlayActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 200)
         }
+    }
+
+    /**
+     *
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun playPressed() {
+
+        binding.playButton.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    binding.playButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_pressed))
+                    binding.playButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.play_zoom_pressed))
+                }
+
+                MotionEvent.ACTION_UP -> {
+                    binding.playButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_relese))
+                    binding.playButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.play_zoom_relese))
+                }
+            }
+            false
+        })
     }
 
     /**
@@ -41,12 +76,40 @@ class MainActivity : AppCompatActivity() {
      */
     private fun statsInit() {
 
+        statsPressed()
+
         binding.statsButton.setOnClickListener() {
 
-            val intent = Intent(this, StatsActivity::class.java)
-            startActivity(intent)
-            finish()
+            binding.settingsButton.isEnabled = false
+            binding.statsButton.isEnabled = false
+            binding.playButton.isEnabled = false
+
+            Handler().postDelayed(Runnable {
+                val intent = Intent(this, StatsActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 500)
+
+            binding.statsButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.spin))
         }
+    }
+
+    /**
+     *
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun statsPressed() {
+
+        binding.statsButton.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN ->
+                    binding.statsButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.spin_pressed))
+
+                MotionEvent.ACTION_UP ->
+                    binding.statsButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.spin_relese))
+            }
+            false
+        })
     }
 
     /**
@@ -54,12 +117,40 @@ class MainActivity : AppCompatActivity() {
      */
     private fun settingsInit() {
 
+        settingsPressed()
+
         binding.settingsButton.setOnClickListener() {
 
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
-            finish()
+            binding.settingsButton.isEnabled = false
+            binding.statsButton.isEnabled = false
+            binding.playButton.isEnabled = false
+
+            Handler().postDelayed(Runnable {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 500)
+
+            binding.settingsButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.spin))
         }
+    }
+
+    /**
+     *
+     */
+    @SuppressLint("ClickableViewAccessibility")
+    private fun settingsPressed() {
+
+        binding.settingsButton.setOnTouchListener(OnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN ->
+                    binding.settingsButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.spin_pressed))
+
+                MotionEvent.ACTION_UP ->
+                    binding.settingsButtonIcon.startAnimation(AnimationUtils.loadAnimation(this, R.anim.spin_relese))
+            }
+            false
+        })
     }
 
     /**
